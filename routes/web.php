@@ -24,3 +24,4 @@ Route::get('/dashboard/activity', 'HomeController@activity')->name('dashboard-ac
 Route::get('/dashboard/photo', 'HomeController@photo')->name('dashboard-photo');
 Route::get('/profile', 'Auth\ProfileController@index')->name('profile_form');
 Route::post('/profile', 'Auth\ProfileController@update')->name('profile_update');
+Route::post('/device/associate-vehicle/{device_id}/{vehicle_id}', 'DeviceController@associateVehicle')->name('device-vehicle-association');

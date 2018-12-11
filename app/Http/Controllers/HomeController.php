@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Get;
+use App\Device;
+use App\Status;
+use App\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -28,7 +33,21 @@ class HomeController extends Controller
 
     public function device()
     {
-        return view('device');
+        $devices = Device::where('user_id', Auth::user()->user_id)->get();
+
+        foreach($devices as $device) {
+            $deviceLastStatus = Get::where('device_id', $device->device_id)
+                ->orderBy('date_date', 'DESC')
+                ->first();
+
+            $device->lastStatus = Status::find($deviceLastStatus->status_code);
+
+            $device->associatedVehicle = Vehicle::find($device->vehicle_id);
+        }
+
+        $vehicles = Vehicle::where('user_id', Auth::user()->user_id)->get();
+
+        return view('device', compact(['devices', 'vehicles']));
     }
 
     public function vehicle()
