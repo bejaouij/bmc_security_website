@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Device;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,4 +36,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function devices() {
+        return Device::where('user_id', $this->user_id)->get();
+    }
 }

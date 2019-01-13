@@ -33,7 +33,8 @@ class HomeController extends Controller
 
     public function device()
     {
-        $devices = Device::where('user_id', Auth::user()->user_id)->get();
+        $currentUser = Auth::user();
+        $devices = $currentUser->devices();
 
         foreach($devices as $device) {
             $deviceLastStatus = Get::where('device_id', $device->device_id)
