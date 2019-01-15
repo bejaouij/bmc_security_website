@@ -66,7 +66,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 				</div>
 
 				<div class="modal-body">
-					<form id="add-device-form" method="POST" action="#">
+					<form id="add-device-form" method="POST" action="{{ route('device-add') }}">
 						@csrf
 						<div class="form-group row">
 							<label for="device_serial_number_part_1" class="col-sm-2 col-form-label">Clef*</label>
