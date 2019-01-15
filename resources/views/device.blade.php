@@ -36,7 +36,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 						<span data-feather="power"></span>Désactiver
 					</button>
 
-					<form id="device-enable-form-{{ $device->device_id }}" action="#" method="POST">
+					<form id="device-disable-form-{{ $device->device_id }}" action="{{ route('device-disable', ['id' => $device->device_id]) }}" method="POST">
 						@csrf
 					</form>
 				@elseif($device->lastStatus->status_code == "2")

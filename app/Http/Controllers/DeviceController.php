@@ -70,4 +70,15 @@ class DeviceController extends Controller
 
         return redirect()->back();
     }
+
+    public function disable(int $id) {
+        Device::findOrFail($id);
+
+        $deviceStatus = new Get();
+        $deviceStatus->status_code = STATUS_CODE_DISABLED;
+        $deviceStatus->device_id = $id;
+        $deviceStatus->save();
+
+        return redirect()->back();
+    }
 }
