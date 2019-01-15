@@ -75,6 +75,10 @@ function buttonTypeByStatusCode($statusCode) : String {
 					</div>
 				@endif
 
+				<form id="device-enable-form-{{ $device->device_id }}" action="{{ route('device-enable', ['id' => $device->device_id]) }}" method="POST">
+					@csrf
+				</form>
+
 			    <div class="dropdown">
 			        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="vehicles-list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span data-feather="truck"></span>{{ !empty($device->associatedVehicle) ? $device->associatedVehicle->vehicle_name : 'Associer un véhicule' }}
@@ -104,7 +108,16 @@ function buttonTypeByStatusCode($statusCode) : String {
 						</form>
 						@endforelse
 					</div>
-			    </div>            
+			    </div>
+
+				<button class="btn btn-sm btn-outline-secondary" data-target-id="device-remove-form-{{ $device->device_id }}"
+						onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit();">
+					<span data-feather="x"></span>Supprimer
+				</button>
+
+				<form id="device-remove-form-{{ $device->device_id }}" method="POST" action="#">
+					@csrf
+				</form>
 			</div>
 		</div>
 	</div>
