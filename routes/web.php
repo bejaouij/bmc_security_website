@@ -27,4 +27,5 @@ Route::post('/profile', 'Auth\ProfileController@update')->name('profile_update')
 Route::post('/device/add', 'DeviceController@add')->name('device-add');
 Route::post('/device/enable/{id}', 'DeviceController@enable')->name('device-enable');
 Route::post('/device/disable/{id}', 'DeviceController@disable')->name('device-disable');
+Route::post('/device/disabling/{id}', 'DeviceController@disabling')->name('device-disabling');
 Route::post('/device/associate-vehicle/{device_id}/{vehicle_id}', 'DeviceController@associateVehicle')->name('device-vehicle-association');

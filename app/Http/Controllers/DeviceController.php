@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Device;
 use App\Vehicle;
 use App\Get;
+use App\Code;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,6 +79,33 @@ class DeviceController extends Controller
         $deviceStatus->status_code = STATUS_CODE_DISABLED;
         $deviceStatus->device_id = $id;
         $deviceStatus->save();
+
+        return redirect()->back();
+    }
+
+    public function disabling(Request $request, int $id) {
+        $validator = $request->validate([
+            'code_code' => 'required|string|min:5|max:5'
+        ]);
+
+        Device::findOrFail($id);
+
+        if(is_null($code = Code::find($validator['code_code'])))
+            return redirect()->back()->with('error', 'Le code saisi est invalide.');
+
+        if($code->device_id != $id)
+            return redirect()->back()->with('error', 'Le code saisi est invalide.');
+
+        if($code->code_is_used == true)
+            return redirect()->back()->with('error', 'Le code a déjà été utilisé.');
+
+        $deviceStatus = new Get();
+        $deviceStatus->status_code = STATUS_CODE_DISABLED;
+        $deviceStatus->device_id = $id;
+        $deviceStatus->save();
+
+        $code->code_is_used = true;
+        $code->save();
 
         return redirect()->back();
     }
