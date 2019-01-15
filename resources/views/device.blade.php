@@ -81,6 +81,17 @@ function buttonTypeByStatusCode($statusCode) : String {
 					</button>
 					    
 					<div class="dropdown-menu" aria-labelledby="vehicles-list">
+						@if(!empty($device->associatedVehicle))
+							<a href="#" class="dropdown-item" data-target-id="dissociate-vehicle-{{ $device->device_id }}"
+							   onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit()">Dissocier</a>
+
+							<form id="dissociate-vehicle-{{ $device->device_id }}" action="#" method="POST">
+								@csrf
+							</form>
+
+							<div class="dropdown-divider"></div>
+						@endif
+
 						@forelse($vehicles as $vehicle)
 						@empty
 						<a class="dropdown-item" href="{{ route('dashboard-vehicle') }}">Aucun véhicule enregistré</a>
