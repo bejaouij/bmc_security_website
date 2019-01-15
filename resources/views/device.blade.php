@@ -27,7 +27,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 						<span data-feather="power"></span>Activer
 					</button>
 
-					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+					<form id="device-enable-form-{{ $device->device_id }}" action="{{ route('device-enable', ['id' => $device->device_id]) }}" method="POST">
 						@csrf
 					</form>
 				@elseif($device->lastStatus->status_code == "1")
@@ -36,7 +36,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 						<span data-feather="power"></span>Désactiver
 					</button>
 
-					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+					<form id="device-enable-form-{{ $device->device_id }}" action="#" method="POST">
 						@csrf
 					</form>
 				@elseif($device->lastStatus->status_code == "2")
@@ -45,7 +45,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 						<span data-feather="power"></span>Valider la désactivation
 					</button>
 
-					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+					<form id="device-enable-form-{{ $device->device_id }}" action="#" method="POST">
 						@csrf
 					</form>
 				@endif

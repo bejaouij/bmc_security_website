@@ -8,6 +8,10 @@ use App\Get;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+define('STATUS_CODE_DISABLED', '0');
+define('STATUS_CODE_ENABLED', '1');
+define('STATUS_CODE_DISABLING', '2');
+
 class DeviceController extends Controller
 {
     public function associateVehicle(int $device_id, int $vehicle_id) {
@@ -54,5 +58,16 @@ class DeviceController extends Controller
         $deviceStatus->save();
 
         return redirect()->back()->with('success', 'Dispositif ajouté avec succès.');
+    }
+
+    public function enable(int $id) {
+        Device::findOrFail($id);
+
+        $deviceStatus = new Get();
+        $deviceStatus->status_code = STATUS_CODE_ENABLED;
+        $deviceStatus->device_id = $id;
+        $deviceStatus->save();
+
+        return redirect()->back();
     }
 }
