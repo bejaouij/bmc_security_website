@@ -53,7 +53,12 @@ class HomeController extends Controller
 
     public function vehicle()
     {
-        return view('vehicle');
+        $vehicles = Vehicle::where('user_id', Auth::user()->user_id)->get();
+
+        foreach($vehicles as $vehicle)
+            $vehicle->lastStatus = $vehicle->lastStatus();
+
+        return view('vehicle', compact('vehicles'));
     }
 
     public function activity()
