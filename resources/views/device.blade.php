@@ -115,7 +115,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 					<span data-feather="x"></span>Supprimer
 				</button>
 
-				<form id="device-remove-form-{{ $device->device_id }}" method="POST" action="#">
+				<form id="device-remove-form-{{ $device->device_id }}" method="POST" action="{{ route('device-remove', ['id' => $device->device_id]) }}">
 					@csrf
 				</form>
 			</div>

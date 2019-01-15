@@ -29,4 +29,5 @@ Route::post('/device/enable/{id}', 'DeviceController@enable')->name('device-enab
 Route::post('/device/disable/{id}', 'DeviceController@disable')->name('device-disable');
 Route::post('/device/disabling/{id}', 'DeviceController@disabling')->name('device-disabling');
 Route::post('/device/dissociate/{id}', 'DeviceController@dissociate')->name('device-dissociate');
+Route::post('/device/remove/{id}', 'DeviceController@remove')->name('device-remove');
 Route::post('/device/associate-vehicle/{device_id}/{vehicle_id}', 'DeviceController@associateVehicle')->name('device-vehicle-association');

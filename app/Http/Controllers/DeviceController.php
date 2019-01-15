@@ -110,10 +110,22 @@ class DeviceController extends Controller
         return redirect()->back();
     }
 
-    public function dissociate($id) {
+    public function dissociate(int $id) {
         $device = Device::findOrFail($id);
 
         $device->vehicle_id = null;
+        $device->save();
+
+        return redirect()->back();
+    }
+
+    public function remove(int $id) {
+        $device = Device::findOrFail($id);
+
+        if($device->user_id != Auth::user()->user_id)
+            abort(404);
+
+        $device->user_id = null;
         $device->save();
 
         return redirect()->back();
