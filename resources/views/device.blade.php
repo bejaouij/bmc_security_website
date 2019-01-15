@@ -21,9 +21,34 @@ function buttonTypeByStatusCode($statusCode) : String {
 		    </div>
 
 		    <div class="btn-toolbar mb-2 mb-md-0">
-				<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#device-disabling">
-					<span data-feather="power"></span>Désactiver
-				</button>
+				@if($device->lastStatus->status_code == "0")
+					<button class="btn btn-sm btn-outline-secondary" data-target-id="device-enable-form-{{ $device->device_id }}"
+							onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit();">
+						<span data-feather="power"></span>Activer
+					</button>
+
+					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+						@csrf
+					</form>
+				@elseif($device->lastStatus->status_code == "1")
+					<button class="btn btn-sm btn-outline-secondary"  data-target-id="device-disable-form-{{ $device->device_id }}"
+							onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit();">
+						<span data-feather="power"></span>Désactiver
+					</button>
+
+					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+						@csrf
+					</form>
+				@elseif($device->lastStatus->status_code == "2")
+					<button class="btn btn-sm btn-outline-secondary"  data-target-id="device-disabling-activation-form-{{ $device->device_id }}"
+							onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit();">
+						<span data-feather="power"></span>Valider la désactivation
+					</button>
+
+					<form id="device-enable-form-{{ $device->device_id }}" action="#">
+						@csrf
+					</form>
+				@endif
 
 			    <div class="dropdown">
 			        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="vehicles-list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
