@@ -85,7 +85,7 @@ function buttonTypeByStatusCode($statusCode) : String {
 							<a href="#" class="dropdown-item" data-target-id="dissociate-vehicle-{{ $device->device_id }}"
 							   onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit()">Dissocier</a>
 
-							<form id="dissociate-vehicle-{{ $device->device_id }}" action="#" method="POST">
+							<form id="dissociate-vehicle-{{ $device->device_id }}" action="{{ route('device-dissociate', ['id' => $device->device_id]) }}" method="POST">
 								@csrf
 							</form>
 
