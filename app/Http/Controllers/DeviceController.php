@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Device;
 use App\Vehicle;
+use App\Get;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,5 +25,34 @@ class DeviceController extends Controller
         $device->save();
 
     	return redirect()->back()->with('success', 'Véhicule associé au dispositif avec succès.');
+    }
+
+    public function add(Request $request) {
+        $validator = $request->validate([
+            'device_serial_number_part_1' => 'required|min:4|max:4',
+            'device_serial_number_part_2' => 'required|min:4|max:4',
+            'device_serial_number_part_3' => 'required|min:4|max:4',
+            'device_name' => 'required|min:1|max:50'
+        ]);
+
+        $deviceSerialNumber = strtoupper($validator['device_serial_number_part_1'] . $validator['device_serial_number_part_2'] . $validator['device_serial_number_part_3']);
+
+        if(is_null($device = Device::where('device_serial_number', $deviceSerialNumber)->first()))
+            return redirect()->back()->with('error', 'La clef est invalide.');
+        if(!is_null($device->user_id)) {
+            return redirect()->back()->with('error', 'La clef a déjà été utilisée.');
+        }
+
+        $device->user_id = Auth::user()->user_id;
+        $device->device_name = $validator['device_name'];
+
+        $deviceStatus = new Get();
+        $deviceStatus->status_code = '0';
+        $deviceStatus->device_id = $device->device_id;
+
+        $device->save();
+        $deviceStatus->save();
+
+        return redirect()->back()->with('success', 'Dispositif ajouté avec succès.');
     }
 }
