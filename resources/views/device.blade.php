@@ -40,14 +40,39 @@ function buttonTypeByStatusCode($statusCode) : String {
 						@csrf
 					</form>
 				@elseif($device->lastStatus->status_code == "2")
-					<button class="btn btn-sm btn-outline-secondary"  data-target-id="device-disabling-activation-form-{{ $device->device_id }}"
-							onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit();">
+					<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#device-disabling-activation-form-{{ $device->device_id }}-container">
 						<span data-feather="power"></span>Valider la désactivation
 					</button>
 
-					<form id="device-enable-form-{{ $device->device_id }}" action="#" method="POST">
-						@csrf
-					</form>
+					<div class="modal fade" id="device-disabling-activation-form-{{ $device->device_id }}-container" tabindex="-1" role="dialog" aria-labelledby="device-disabling-activation-form-{{ $device->device_id }}-container-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="device-disabling-activation-form-{{ $device->device_id }}-container-label">Valider la désactivation</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+
+								<div class="modal-body">
+									<form id="device-disabling-activation-form-{{ $device->device_id }}" method="POST" action="{{ route('device-disabling', ['id' => $device->device_id]) }}">
+										@csrf
+										<div class="form-group row">
+											<label for="code_code" class="col-sm-2 col-form-label">Code de désactivation*</label>
+											<div class="col-sm-6">
+												<input class="form-control" id="code_code" name="code_code" placeholder="Code à 5 caractères" minlength="5" maxlength="5">
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									<button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('device-disabling-activation-form-{{ $device->device_id }}').submit()">Enregistrer</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				@endif
 
 			    <div class="dropdown">
