@@ -97,6 +97,11 @@ class VehicleController extends Controller
             $vehicleToDelete->delete();
         });
 
+        if(!is_null($vehicle->device)) {
+            $vehicle->device->vehicle_id = null;
+            $vehicle->device->save();
+        }
+
         $vehicle->delete();
 
         return redirect()->back();

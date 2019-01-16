@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Device;
 use App\VehicleStatus;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,9 @@ class Vehicle extends Model
 
     public function vehicleStatuses() {
         return $this->hasMany('App\VehicleStatus', 'vehicle_id', 'vehicle_id');
+    }
+
+    public function device() {
+        return $this->belongsTo('\App\Device', 'vehicle_id', 'vehicle_id');
     }
 }
