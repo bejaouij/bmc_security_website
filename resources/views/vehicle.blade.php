@@ -29,7 +29,7 @@
                     @endif
 
                     @if(!is_null($vehicle->device))
-                        <button class="btn btn-sm btn-outline-secondary">
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#vehicle-localization">
                             <span data-feather="map-pin"></span>
                             Localiser
                         </button>
@@ -45,6 +45,8 @@
                     </button>
                 </div>
             </div>
+
+            {{-- Modification vehicle modal --}}
 
             <div class="modal fade" id="edit-vehicle-form-container-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="edit-vehicle-form-{{ $vehicle->vehicle_id }}-container-label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -170,6 +172,8 @@
                 </div>
             </div>
 
+            {{-- Removing vehicle modal --}}
+
             <div class="modal fade" id="remove-vehicle-form-container-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="remove-vehicle-form-container-label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -209,6 +213,34 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-vehicle-form-container">Ajouter un véhicule</button>
     </div>
+
+    {{-- Localization map modal --}}
+
+    <div class="modal fade" id="vehicle-localization" tabindex="-1" role="dialog" aria-labelledby="vehicle-localization-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vehicle-localization-label">Localisation du véhicule</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.7412910746643!2d3.860406615208424!3d43.632743279121925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6aedefbe5ce25%3A0x91bc01c37c4d1035!2sPolytech+Montpellier!5e0!3m2!1sfr!2sfr!4v1544202667064" width="465" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <div>
+                        <span>latitude: 43.633000 ; longitude: 3.862488</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Add vehicle mocal --}}
 
     <div class="modal fade" id="add-vehicle-form-container" tabindex="-1" role="dialog" aria-labelledby="add-vehicle-form-container-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
