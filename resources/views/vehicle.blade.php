@@ -28,10 +28,12 @@
                         </button>
                     @endif
 
-                    <button class="btn btn-sm btn-outline-secondary">
-                        <span data-feather="map-pin"></span>
-                        Localiser
-                    </button>
+                    @if(!is_null($vehicle->device))
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <span data-feather="map-pin"></span>
+                            Localiser
+                        </button>
+                    @endif
 
                     <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#edit-vehicle-form-container-{{ $vehicle->vehicle_id }}">
                         <span data-feather="edit"></span>
