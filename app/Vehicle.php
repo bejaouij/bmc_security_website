@@ -11,6 +11,16 @@ class Vehicle extends Model
     protected $primaryKey = 'vehicle_id';
     public $timestamps = false;
 
+    protected $fillable = [
+        'vehicle_name',
+        'vehicle_brand',
+        'vehicle_model',
+        'vehicle_numberplate',
+        'vehicle_type',
+        'vehicle_color',
+        'user_id',
+    ];
+
     /**
      * Retrieve the vehicle last status.
      *

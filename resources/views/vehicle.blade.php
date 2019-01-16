@@ -13,6 +13,9 @@
 @extends('layouts.dashboard', ['pageTitle' => 'Véhicules', 'pageCode' => 'vehicle'])
 
 @section('content')
+    {{--@if($errors->any())--}}
+        {{--{{ dd($errors) }}--}}
+    {{--@endif--}}
     <div class="border-bottom">
         @forelse($vehicles as $vehicle)
             <div class="alert alert-{{ buttonTypeByStatusCode($vehicle->lastStatus->status_code) }} d-flex justify-content-between" role="alert">
@@ -65,9 +68,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="add-vehicle-form" method="POST" action="#">
+                    <form id="add-vehicle-form" method="POST" action="{{ route('vehicle-add') }}">
                         @csrf
-                        
+
                         <div class="form-group row">
                             <label for="vehicle_name" class="col-sm-2 col-form-label">Libelle<span class="required">*</span></label>
                             <div class="col-sm-10">
@@ -145,9 +148,9 @@
                         @endif
 
                         <div class="form-group row">
-                            <label for="vehicle_color" class="col-sm-2 col-form-label">Couleur</label>
+                            <label for="vehicle_color" class="col-sm-2 col-form-label">Couleur<span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="vehicle_color" name="vehicle_color" placeholder="Couleur">
+                                <input class="form-control" id="vehicle_color" name="vehicle_color" placeholder="Couleur" required>
                             </div>
                         </div>
 
