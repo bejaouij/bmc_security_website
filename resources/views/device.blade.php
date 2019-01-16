@@ -97,15 +97,14 @@ function buttonTypeByStatusCode($statusCode) : String {
 						@endif
 
 						@forelse($vehicles as $vehicle)
-						@empty
-						<a class="dropdown-item" href="{{ route('dashboard-vehicle') }}">Aucun véhicule enregistré</a>
-						@else
-						<a class="dropdown-item" href="#" data-target-id="associate-vehicle-form-{{ $vehicle->vehicle_id }}"
-						   onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit()">{{ $vehicle->vehicle_name }}</a>
+							<a class="dropdown-item" href="#" data-target-id="associate-vehicle-form-{{ $vehicle->vehicle_id }}"
+								onclick="event.preventDefault(); document.getElementById(this.getAttribute('data-target-id')).submit()">{{ $vehicle->vehicle_name }}</a>
 
-						<form id="associate-vehicle-form-{{ $vehicle->vehicle_id }}" method="POST" action="{{ route('device-vehicle-association', ["device_id" => $device->device_id, "vehicle_id" => $vehicle->vehicle_id]) }}">
-							@csrf
-						</form>
+							<form id="associate-vehicle-form-{{ $vehicle->vehicle_id }}" method="POST" action="{{ route('device-vehicle-association', ["device_id" => $device->device_id, "vehicle_id" => $vehicle->vehicle_id]) }}">
+								@csrf
+							</form>
+						@empty
+							<a class="dropdown-item" href="{{ route('dashboard-vehicle') }}">Aucun véhicule enregistré</a>
 						@endforelse
 					</div>
 			    </div>
