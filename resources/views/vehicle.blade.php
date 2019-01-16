@@ -41,9 +41,8 @@
                         Modifier
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary">
+                    <button class="btn btn-sm btn-danger">
                         <span data-feather="x"></span>
-                        Supprimer
                     </button>
                 </div>
             </div>
