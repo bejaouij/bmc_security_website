@@ -37,7 +37,7 @@ class VehicleController extends Controller
         $newVehicle->vehicle_numberplate = $vehicleNumberplate;
         $newVehicle->vehicle_type = $validator['vehicle_type'];
         $newVehicle->vehicle_color = $validator['vehicle_color'];
-        $newVehicle->user_id = 1;
+        $newVehicle->user_id = Auth::user()->user_id;
         $newVehicle->save();
 
         $vehicleStatus = new VehicleStatus();
@@ -76,7 +76,6 @@ class VehicleController extends Controller
         $vehicle->vehicle_numberplate = $vehicleNumberplate;
         $vehicle->vehicle_type = $validator['vehicle_type'];
         $vehicle->vehicle_color = $validator['vehicle_color'];
-        $vehicle->user_id = 1;
         $vehicle->save();
 
         return redirect()->back();
