@@ -32,4 +32,5 @@ Route::post('/device/dissociate/{id}', 'DeviceController@dissociate')->name('dev
 Route::post('/device/remove/{id}', 'DeviceController@remove')->name('device-remove');
 Route::post('/device/associate-vehicle/{device_id}/{vehicle_id}', 'DeviceController@associateVehicle')->name('device-vehicle-association');
 Route::post('/vehicle/add', 'VehicleController@add')->name('vehicle-add');
+Route::post('/vehicle/edit/{id}', 'VehicleController@edit')->name('vehicle-edit');
 Route::post('/vehicle/remove/{id}', 'VehicleController@remove')->name('vehicle-remove');

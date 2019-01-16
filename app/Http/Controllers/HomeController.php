@@ -55,8 +55,12 @@ class HomeController extends Controller
     {
         $vehicles = Vehicle::where('user_id', Auth::user()->user_id)->get();
 
-        foreach($vehicles as $vehicle)
+        foreach($vehicles as $vehicle) {
             $vehicle->lastStatus = $vehicle->lastStatus();
+            $vehicle->numberplatePart1 = substr($vehicle->vehicle_numberplate, 0, 2);
+            $vehicle->numberplatePart2 = substr($vehicle->vehicle_numberplate, 2, 3);
+            $vehicle->numberplatePart3 = substr($vehicle->vehicle_numberplate, 5, 2);
+        }
 
         return view('vehicle', compact('vehicles'));
     }

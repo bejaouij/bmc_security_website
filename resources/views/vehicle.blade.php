@@ -33,7 +33,7 @@
                         Localiser
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary">
+                    <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#edit-vehicle-form-container-{{ $vehicle->vehicle_id }}">
                         <span data-feather="edit"></span>
                         Modifier
                     </button>
@@ -41,6 +41,130 @@
                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#remove-vehicle-form-container-{{ $vehicle->vehicle_id }}">
                         <span data-feather="x"></span>
                     </button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="edit-vehicle-form-container-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="edit-vehicle-form-{{ $vehicle->vehicle_id }}-container-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="edit-vehicle-form-{{ $vehicle->vehicle_id }}-container-label">Modifier "{{ $vehicle->vehicle_name }}"</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="add-vehicle-form-{{ $vehicle->vehicle_id }}" method="POST" action="{{ route('vehicle-edit', ['id' => $vehicle->vehicle_id]) }}">
+                                @csrf
+
+                                <div class="form-group row">
+                                    <label for="vehicle_name" class="col-sm-2 col-form-label">Libelle<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="vehicle_name" name="vehicle_name" placeholder="Libelle" value="{{ $vehicle->vehicle_name }}" required>
+                                    </div>
+                                </div>
+
+                                @if($errors->has('vehicle_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('vehicle_name') }}</strong>
+                                    </span>
+                                @endif
+
+                                <div class="form-group row">
+                                    <label for="vehicle_brand" class="col-sm-2 col-form-label">Marque<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="vehicle_brand" name="vehicle_brand" placeholder="Marque" value="{{ $vehicle->vehicle_brand }}" required>
+                                    </div>
+                                </div>
+
+                                @if($errors->has('vehicle_brand'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('vehicle_brand') }}</strong>
+                                    </span>
+                                @endif
+
+                                <div class="form-group row">
+                                    <label for="vehicle_model" class="col-sm-2 col-form-label">Modèle</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="vehicle_model" name="vehicle_model" placeholder="Modèle" value="{{ $vehicle->vehicle_model }}">
+                                    </div>
+                                </div>
+
+                                @if($errors->has('vehicle_model'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('vehicle_model') }}</strong>
+                                    </span>
+                                @endif
+
+                                <div class="form-group row">
+                                    <div>
+                                        <label class="col-sm-12 col-form-label" aria-describedby="vehicle_numberplate_description">Plaque d'immatriculation</label>
+
+                                        <div class="col-12">
+                                            <small id="vehicle_numberplate_description">Renseigenr la plaque d'immatriculation du véhicule n'est pas obligatoire mais permet d'augmenter les chances de le retrouver en cas de vol.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-10 d-flex">
+                                        <input class="form-control col-sm-2" name="vehicle_numberplate_part1" placeholder="AB" min="2" max="2"
+                                               onkeyup="if(this.value.length >= 2) {document.getElementById('vehicle_numberplate_part2').focus();} this.value = this.value.toUpperCase();"
+                                               value="{{ $vehicle->numberplatePart1 }}"><pre> </pre>
+
+                                        <input class="form-control col-sm-3" name="vehicle_numberplate_part2" placeholder="123" min="3" max="3"
+                                               onkeyup="if(this.value.length >= 3) {document.getElementById('vehicle_numberplate_part3').focus();}"
+                                               value="{{ $vehicle->numberplatePart2 }}"><pre> </pre>
+
+                                        <input class="form-control col-sm-2" name="vehicle_numberplate_part3" placeholder="CD" min="2" max="2"
+                                               onkeyup="this.value = this.value.toUpperCase();"
+                                               value="{{ $vehicle->numberplatePart3 }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="vehicle_type" class="col-sm-2 col-form-label">Type<span class="required">*</span></label>
+                                    <div class="col-sm-5">
+                                        <select class="form-control" id="vehicle_type" name="vehicle_type" required>
+                                            <option value="Voiture"{{ $vehicle->vehicle_type == 'Voiture' ? ' selected' : null }}>Voiture</option>
+                                            <option value="Scooter"{{ $vehicle->vehicle_type == 'Scooter' ? ' selected' : null }}>Scooter</option>
+                                            <option value="Moto"{{ $vehicle->vehicle_type == 'Moto' ? ' selected' : null }}>Moto</option>
+                                            <option value="VTT"{{ $vehicle->vehicle_type == 'VTT' ? ' selected' : null }}>VTT</option>
+                                            <option value="VTC"{{ $vehicle->vehicle_type == 'VTC' ? ' selected' : null }}>VTC</option>
+                                            <option value="Vélo de ville"{{ $vehicle->vehicle_type == 'Vélo de ville' ? ' selected' : null }}>Vélo de ville</option>
+                                            <option value="Camion"{{ $vehicle->vehicle_type == 'Camion' ? ' selected' : null }}>Camion</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @if($errors->has('vehicle_type'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('vehicle_type') }}</strong>
+                                    </span>
+                                @endif
+
+                                <div class="form-group row">
+                                    <label for="vehicle_color" class="col-sm-2 col-form-label">Couleur<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="vehicle_color" name="vehicle_color" placeholder="Couleur" value="{{ $vehicle->vehicle_color }}" required>
+                                    </div>
+                                </div>
+
+                                @if($errors->has('vehicle_color'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('vehicle_color') }}</strong>
+                                    </span>
+                                @endif
+
+                                <input id="edit-vehicle-form-{{ $vehicle->vehicle_id }}-submit-button" style="display: none;" type="submit">
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="event.preventDefault(); document.getElementById('edit-vehicle-form-{{ $vehicle->vehicle_id }}-submit-button').click();">Enregistrer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
