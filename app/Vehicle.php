@@ -27,6 +27,6 @@ class Vehicle extends Model
      * @return \App\VehicleStatus
      */
     public function lastStatus(): VehicleStatus {
-        return VehicleStatus::where('vehicle_id', $this->user_id)->orderBy('date_date', 'DESC')->first();
+        return VehicleStatus::where('vehicle_id', $this->vehicle_id)->orderBy('date_date', 'DESC')->first();
     }
 }
