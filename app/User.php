@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function devices() {
         return Device::where('user_id', $this->user_id)->get();
     }
+
+    public function orderedActivity() {
+        return Activity::where('user_id', $this->user_id)->orderBy('activity_date', 'DESC')->get();
+    }
 }

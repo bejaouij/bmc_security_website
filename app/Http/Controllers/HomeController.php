@@ -6,6 +6,7 @@ use App\Get;
 use App\Device;
 use App\Status;
 use App\Vehicle;
+use App\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,7 +68,13 @@ class HomeController extends Controller
 
     public function activity()
     {
-        return view('activity');
+        $activities = Auth::user()->orderedActivity();
+
+        $activities->map(function($activity) {
+           $activity->formattedDate =  date('d / m / Y - H\hi', strtotime($activity->activity_date));
+        });
+
+        return view('activity', compact('activities'));
     }
 
     public function photo()
