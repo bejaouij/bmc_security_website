@@ -47,4 +47,19 @@ class VehicleController extends Controller
 
         return redirect()->back();
     }
+
+    public function remove(int $id) {
+        $vehicle = Vehicle::findOrFail($id);
+
+        if($vehicle->user_id != Auth::user()->user_id)
+            abort(404);
+
+        $vehicle->vehicleStatuses->map(function($vehicleToDelete) {
+            $vehicleToDelete->delete();
+        });
+
+        $vehicle->delete();
+
+        return redirect()->back();
+    }
 }

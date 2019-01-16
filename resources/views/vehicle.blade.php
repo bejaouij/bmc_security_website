@@ -13,9 +13,6 @@
 @extends('layouts.dashboard', ['pageTitle' => 'Véhicules', 'pageCode' => 'vehicle'])
 
 @section('content')
-    {{--@if($errors->any())--}}
-        {{--{{ dd($errors) }}--}}
-    {{--@endif--}}
     <div class="border-bottom">
         @forelse($vehicles as $vehicle)
             <div class="alert alert-{{ buttonTypeByStatusCode($vehicle->lastStatus->status_code) }} d-flex justify-content-between" role="alert">
@@ -41,9 +38,39 @@
                         Modifier
                     </button>
 
-                    <button class="btn btn-sm btn-danger">
+                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#remove-vehicle-form-container-{{ $vehicle->vehicle_id }}">
                         <span data-feather="x"></span>
                     </button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="remove-vehicle-form-container-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="remove-vehicle-form-container-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="remove-vehicle-form-container-label">Suppression du véhicule</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>
+                                &Ecirc;tes-vous sûr de vouloir supprimer le véhicule "{{ $vehicle->vehicle_name }}" ?
+                            </p>
+                            <form id="add-vehicle-form-{{ $vehicle->vehicle_id }}" method="POST" action="{{ route('vehicle-remove', ['id' => $vehicle->vehicle_id]) }}">
+                                @csrf
+
+                                <input id="remove-vehicle-form-{{ $vehicle->vehicle_id }}-submit-button" style="display: none;" type="submit">
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-danger"
+                                    onclick="event.preventDefault(); document.getElementById('remove-vehicle-form-{{ $vehicle->vehicle_id }}-submit-button').click();">Confirmer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         @empty
