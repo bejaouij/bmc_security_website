@@ -49,6 +49,6 @@
     </div>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Télécharger un rapport</button>
+        <a href="{{ route('report-activities') }}"><button type="button" class="btn btn-outline-primary"><span data-feather="download"></span> Télécharger un rapport</button></a>
     </div>
 @endsection

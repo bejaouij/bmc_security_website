@@ -21,6 +21,7 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/dashboard/device', 'HomeController@device')->name('dashboard-device');
 Route::get('/dashboard/vehicle', 'HomeController@vehicle')->name('dashboard-vehicle');
 Route::get('/dashboard/activity', 'HomeController@activity')->name('dashboard-activity');
+Route::get('/dashboard/activity/report', 'ReportController@activities')->name('report-activities');
 Route::get('/dashboard/photo', 'HomeController@photo')->name('dashboard-photo');
 Route::get('/profile', 'Auth\ProfileController@index')->name('profile_form');
 Route::post('/profile', 'Auth\ProfileController@update')->name('profile_update');
