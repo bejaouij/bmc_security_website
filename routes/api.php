@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/positions', 'PositionController@index');
+Route::post('/position/{device_serial}/{x}/{y}', 'PositionController@store');
