@@ -115,3 +115,29 @@ div.map {
 div[id*="vehicle-localization-"] .modal-body {
   height: 750px;
 }
+
+div.devices-container {
+  margin: 0 17px 17px 0;
+}
+
+div.device-container {
+  cursor: pointer;
+  display: flex;
+  width: 200px;
+  height: 200px;
+  font-size: x-large;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 0 10px 2px #888;
+  background-color: whitesmoke;
+
+  -webkit-transition: box-shadow .25s;
+  -moz-transition: box-shadow .25s;
+  -ms-transition: box-shadow .25s;
+  -o-transition: box-shadow .25s;
+  transition: box-shadow .25s;
+}
+div.device-container:hover {
+  box-shadow: none;
+}

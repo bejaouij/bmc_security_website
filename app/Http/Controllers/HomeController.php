@@ -82,6 +82,7 @@ class HomeController extends Controller
 
     public function photo()
     {
+        Auth::user()->devices = Auth::user()->devices();
         return view('photo');
     }
 }
