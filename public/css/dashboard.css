@@ -106,3 +106,12 @@ svg.feather {
 span.required {
   color: red;
 }
+
+div.map {
+  height: 100%;
+  width: 100%;
+}
+
+div[id*="vehicle-localization-"] .modal-body {
+  height: 750px;
+}

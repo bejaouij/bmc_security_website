@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Position;
 use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
@@ -13,4 +14,8 @@ class Device extends Model
     protected $fillable = [
         'device_name'
     ];
+
+    public function lastPositions() {
+        return Position::where('device_id', $this->device_id)->first();
+    }
 }

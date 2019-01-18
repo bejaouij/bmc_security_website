@@ -28,8 +28,8 @@
                         </button>
                     @endif
 
-                    @if(!is_null($vehicle->device))
-                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#vehicle-localization">
+                    @if($vehicle->lastPositions)
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#vehicle-localization-{{ $vehicle->vehicle_id }}">
                             <span data-feather="map-pin"></span>
                             Localiser
                         </button>
@@ -45,6 +45,76 @@
                     </button>
                 </div>
             </div>
+
+            {{-- Localization map modal --}}
+
+            @if($vehicle->lastPositions)
+                <div class="modal fade" id="vehicle-localization-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="vehicle-localization-{{ $vehicle->vehicle_id }}-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="vehicle-localization-{{ $vehicle->vehicle_id }}-label">Localisation du véhicule "{{ $vehicle->vehicle_name }}"</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="map map-{{ $vehicle->vehicle_id }}"></div>
+                                <div>
+                                    <span>latitude: {{ $vehicle->lastPositions->position_x }} ; longitude: {{ $vehicle->lastPositions->position_y }}</span>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script data-id="map-script-{{ $vehicle->vehicle_id }}" data-position-x="{{ $vehicle->lastPositions->position_x }}" data-position-y="{{ $vehicle->lastPositions->position_y }}" defer>
+                    {{ 'var scriptId = ' . $vehicle->vehicle_id }}
+
+                    var currentScript = document.querySelector('script[data-id="map-script-' + scriptId + '"]');
+                    var map;
+                    var latLng = {lat: parseFloat(currentScript.getAttribute('data-position-x')), lng: parseFloat(currentScript.getAttribute('data-position-y'))};
+
+                    function initMap() {
+                        map = new google.maps.Map(document.querySelector('div.map.map-' + scriptId), {
+                            center: latLng,
+                            zoom: 15
+                        });
+
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map
+                        });
+
+                        var geocoder = new google.maps.Geocoder;
+                        var infowindow = new google.maps.InfoWindow;
+
+                        geocoder.geocode({'location': latLng}, function(results, status) {
+                            if(status === 'OK') {
+                                if(results[0]) {
+                                    infowindow.setContent(results[0].formatted_address);
+                                }
+                                else {
+                                    infowindow.setContent("Adresse inconnue");
+                                }
+                            }
+                            else {
+                                infowindow.setContent("Adresse inconnue");
+                            }
+
+                            infowindow.open(map, marker)
+                        })
+
+                    }
+                </script>
+
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyhH9jFHQOJLMq0gUB5bKTl2sGdFYTqwA&callback=initMap" async defer></script>
+            @endif
 
             {{-- Modification vehicle modal --}}
 
@@ -212,32 +282,6 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-vehicle-form-container">Ajouter un véhicule</button>
-    </div>
-
-    {{-- Localization map modal --}}
-
-    <div class="modal fade" id="vehicle-localization" tabindex="-1" role="dialog" aria-labelledby="vehicle-localization-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="vehicle-localization-label">Localisation du véhicule</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                
-                <div class="modal-body">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.7412910746643!2d3.860406615208424!3d43.632743279121925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b6aedefbe5ce25%3A0x91bc01c37c4d1035!2sPolytech+Montpellier!5e0!3m2!1sfr!2sfr!4v1544202667064" width="465" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <div>
-                        <span>latitude: 43.633000 ; longitude: 3.862488</span>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     {{-- Add vehicle mocal --}}

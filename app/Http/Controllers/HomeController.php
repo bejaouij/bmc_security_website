@@ -61,6 +61,9 @@ class HomeController extends Controller
             $vehicle->numberplatePart1 = substr($vehicle->vehicle_numberplate, 0, 2);
             $vehicle->numberplatePart2 = substr($vehicle->vehicle_numberplate, 2, 3);
             $vehicle->numberplatePart3 = substr($vehicle->vehicle_numberplate, 5, 2);
+
+            if($vehicle->device)
+                $vehicle->lastPositions = $vehicle->device->lastPositions();
         }
 
         return view('vehicle', compact('vehicles'));
