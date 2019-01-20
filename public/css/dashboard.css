@@ -117,6 +117,7 @@ div[id*="vehicle-localization-"] .modal-body {
 }
 
 div.devices-container, div.photos-container {
+  display: flex;
   margin: 0 17px 17px 0;
 }
 
@@ -130,6 +131,7 @@ div.device-container, div.photo-container {
   display: flex;
   width: 200px;
   height: 200px;
+  margin: 0 25px 0 0;
   font-size: x-large;
   text-align: center;
   justify-content: center;

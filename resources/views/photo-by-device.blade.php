@@ -2,21 +2,24 @@
 
 @section('content')
     <div class="border-bottom">
-        @forelse($device->photos as $photo)
-            <div class="photos-container">
-                <div class="photo-container" style="background-image: url({{ asset('media/device') . '/' . $photo->photo_relative_path }})" data-toggle="modal" data-target="#bigger-photo-container"
-                     onclick="event.preventDefault();
-                     $(this.getAttribute('data-target')).modal('show');
-                     $(this.getAttribute('data-target') + ' div.modal-footer p')[0].innerHTML = '{{ $photo->formattedDate }}';
-                     document.querySelector(this.getAttribute('data-target') + ' div.modal-body').style.backgroundImage = 'url(\'{{ asset('media/device') . '/' . $photo->photo_relative_path }}\')'">
+        <div class="photos-container">
+            @forelse($device->photos as $photo)
+                <div>
+                    <div class="photo-container" style="background-image: url({{ asset('media/device') . '/' . $photo->photo_relative_path }})" data-toggle="modal" data-target="#bigger-photo-container"
+                         onclick="event.preventDefault();
+                                 $(this.getAttribute('data-target')).modal('show');
+                                 $(this.getAttribute('data-target') + ' div.modal-footer p')[0].innerHTML = '{{ $photo->formattedDate }}';
+                                 document.querySelector(this.getAttribute('data-target') + ' div.modal-body').style.backgroundImage = 'url(\'{{ asset('media/device') . '/' . $photo->photo_relative_path }}\')'">
+                    </div>
+
+                    <p class="photo-date">{{ $photo->formattedDate }}</p>
                 </div>
-                <p class="photo-date">{{ $photo->formattedDate }}</p>
-            </div>
-        @empty
-            <p>
-                Le dispositif {{ $device->device_name }} n'a encore pris aucune photo.
-            </p>
-        @endforelse
+            @empty
+                <p>
+                    Le dispositif {{ $device->device_name }} n'a encore pris aucune photo.
+                </p>
+            @endforelse
+        </div>
     </div>
 
     <div class="modal fade" id="bigger-photo-container" tabindex="-1" role="dialog" aria-labelledby="bigger-photo-container-label" aria-hidden="true">
