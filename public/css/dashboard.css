@@ -116,11 +116,16 @@ div[id*="vehicle-localization-"] .modal-body {
   height: 750px;
 }
 
-div.devices-container {
+div.devices-container, div.photos-container {
   margin: 0 17px 17px 0;
 }
 
-div.device-container {
+div.devices-container a {
+  text-decoration: none;
+  color: black;
+}
+
+div.device-container, div.photo-container {
   cursor: pointer;
   display: flex;
   width: 200px;
@@ -138,6 +143,28 @@ div.device-container {
   -o-transition: box-shadow .25s;
   transition: box-shadow .25s;
 }
-div.device-container:hover {
+div.device-container:hover, div.photo-container:hover {
   box-shadow: none;
+}
+
+div.photo-container, div#bigger-photo-container div.modal-body {
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+
+div#bigger-photo-container div.modal-body {
+  height: 500px;
+}
+
+div#bigger-photo-container div.modal-footer p {
+  font-size: x-large;
+  margin: auto;
+}
+
+div.photos-container p.photo-date {
+  margin-top: 15px;
+  text-align: center;
+  width: 200px;
 }

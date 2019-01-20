@@ -4,9 +4,11 @@
     <div class="border-bottom">
         @forelse(Auth::user()->devices as $device)
             <div class="devices-container">
-                <div class="device-container">
-                    <span>{{ $device->device_name }}</span>
-                </div>
+                <a href="{{ route('dashboard-photo-device', ['id' => $device->device_id]) }}">
+                    <div class="device-container">
+                        <span>{{ $device->device_name }}</span>
+                    </div>
+                </a>
             </div>
         @empty
             <p>

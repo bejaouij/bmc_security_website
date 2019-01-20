@@ -85,4 +85,16 @@ class HomeController extends Controller
         Auth::user()->devices = Auth::user()->devices();
         return view('photo');
     }
+
+    public function photoByDevice($id)
+    {
+        $device = Device::findOrFail($id);
+        $device->photos = $device->photos();
+
+        $device->photos->map(function($photo) {
+            $photo->formattedDate = date('d / m / Y - H\:i\:s', strtotime($photo->photo_date)) ;
+        });
+
+        return view('photo-by-device', compact('device'));
+    }
 }
