@@ -15,16 +15,26 @@
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
 	        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ route('dashboard') }}">BMC Security</a>
-	        <ul class="navbar-nav px-3">
+	        <ul class="navbar-nav px-3 flex-row">
+				<a class="nav-link" href="{{ route('profile_form') }}"
+				   onclick="event.preventDefault();
+                        document.getElementById('profile-form').submit();">
+					{{ __('Profil') }}
+				</a>
+
 	            <a class="nav-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             {{ __('Déconnexion') }}
                 </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 	@csrf
                 </form>
+
+				<form id="profile-form" action="{{ route('profile_form') }}" method="GET" style="display: none;">
+					@csrf
+				</form>
 	        </ul>
 	    </nav>
 

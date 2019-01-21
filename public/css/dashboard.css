@@ -170,3 +170,11 @@ div.photos-container p.photo-date {
   text-align: center;
   width: 200px;
 }
+
+ul.navbar-nav a.nav-link {
+  margin: 0 15px;
+}
+
+ul.navbar-nav a.nav-link:last-child {
+  margin: 0 0 0 15px;
+}
