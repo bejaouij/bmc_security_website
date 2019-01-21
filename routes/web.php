@@ -34,3 +34,5 @@ Route::post('/device/associate-vehicle/{device_id}/{vehicle_id}', 'DeviceControl
 Route::post('/vehicle/add', 'VehicleController@add')->name('vehicle-add');
 Route::post('/vehicle/edit/{id}', 'VehicleController@edit')->name('vehicle-edit');
 Route::post('/vehicle/remove/{id}', 'VehicleController@remove')->name('vehicle-remove');
+Route::post('/vehicle/confirm-theft/{id}', 'VehicleController@confirmTheft')->name('vehicle-confirm-theft');
+Route::post('/vehicle/invalidate-theft/{id}', 'VehicleController@invalidateTheft')->name('vehicle-invalidate-theft');

@@ -17,7 +17,7 @@
         @forelse($vehicles as $vehicle)
             <div class="alert alert-{{ buttonTypeByStatusCode($vehicle->lastStatus->status_code) }} d-flex justify-content-between" role="alert">
                 <div>
-                    <strong style="vertical-align: middle">{{ $vehicle->vehicle_name }}</strong>
+                    <strong style="vertical-align: middle">{{ $vehicle->vehicle_name }} - {{ $vehicle->lastStatus->status->status_name }}</strong>
                 </div>
 
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -26,6 +26,18 @@
                             <span data-feather="phone"></span>
                             Contacter autorités
                         </button>
+                    @elseif($vehicle->lastStatus->status_code == '3')
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#take-decision-{{ $vehicle->vehicle_id }}">
+                            <span data-feather="shuffle"></span>
+                            Aviser
+                        </button>
+
+                        <a href="{{ route('dashboard-photo-device', ['id' => $vehicle->device->device_id]) }}">
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <span data-feather="camera"></span>
+                                Photos prises
+                            </button>
+                        </a>
                     @endif
 
                     @if($vehicle->lastPositions)
@@ -45,6 +57,38 @@
                     </button>
                 </div>
             </div>
+
+            {{-- Take decision modal --}}
+
+            @if($vehicle->lastStatus->status_code == '3')
+                <div class="modal fade" id="take-decision-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="take-decision-{{ $vehicle->vehicle_id }}-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="take-decision-{{ $vehicle->vehicle_id }}-label">Confirmer l'activité suspecte du véhicule "{{ $vehicle->vehicle_name }}"</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        onclick="event.preventDefault(); document.getElementById('confirm-theft-{{ $vehicle->vehicle_id }}').submit();">Confirmer</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        onclick="event.preventDefault(); document.getElementById('invalidate-theft-{{ $vehicle->vehicle_id }}').submit();">Infirmer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="confirm-theft-{{ $vehicle->vehicle_id }}" action="{{ route('vehicle-confirm-theft', ['id' => $vehicle->vehicle_id]) }}" method="POST">
+                    @csrf
+                </form>
+
+                <form id="invalidate-theft-{{ $vehicle->vehicle_id }}" action="{{ route('vehicle-invalidate-theft', ['id' => $vehicle->vehicle_id]) }}" method="POST">
+                    @csrf
+                </form>
+            @endif
 
             {{-- Localization map modal --}}
 
