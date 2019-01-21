@@ -23,4 +23,8 @@ class Device extends Model
     public function photos() {
         return Photo::where('device_id', $this->device_id)->orderBy('photo_date', 'DESC')->get();
     }
+
+    public function vehicle() {
+        return $this->belongsTo('App\Vehicle', 'vehicle_id', 'vehicle_id');
+    }
 }
