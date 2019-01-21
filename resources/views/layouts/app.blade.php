@@ -74,6 +74,14 @@
                                     <form id="profile-form" action="{{ route('profile_form') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
+
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                        {{ __('Mon tableau de bord') }}
+                                    </a>
+
+                                    <form id="profile-form" action="{{ route('profile_form') }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </div>
                             </li>
                         @endguest
