@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/positions', 'PositionController@index');
 Route::get('/device/{device_serial}', 'ApiDeviceController@show');
+Route::post('/device/{device_serial}/{new_status}', 'ApiDeviceController@edit');
+Route::post('/device/vehicle/{device_serial}/{new_status}', 'ApiDeviceController@editVehicle');
 Route::post('/position/{device_serial}/{x}/{y}', 'PositionController@store');
