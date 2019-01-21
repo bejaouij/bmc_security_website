@@ -26,8 +26,8 @@ class ApiDeviceController extends Controller
             ->first();
 
         return [
-            'status_code' => Status::find($deviceLastStatus->status_code),
-            'vehicle_status' => $device->vehicle->lastStatus()->status->status_code,
+            'status_code' => Status::find($deviceLastStatus->status_code)->status_code,
+            'vehicle_status' => !is_null($device->vehicle) ? $device->vehicle->lastStatus()->status->status_code : null,
             'in_disabling' => !is_null(Code::where('device_id', $device->device_id)->where('code_is_used', false)->first())
         ];
 
