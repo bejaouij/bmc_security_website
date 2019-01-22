@@ -17,6 +17,10 @@ Le déploiement de l'application nécessite les outils suivants :
 
 * Initialisation du projet
 
+### 1.0.0 - BÃªta
+
+* Lancement de la version bÃªta
+
 ## Auteurs
 
 * [Jérémy Béjaoui](https://github.com/bejaouij) - *Développeur*
