@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function orderedActivity() {
         return Activity::where('user_id', $this->user_id)->orderBy('activity_date', 'DESC')->get();
     }
+
+    public function address() {
+        return $this->hasOne('App\Address', 'user_id', 'user_id');
+    }
 }

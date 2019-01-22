@@ -14,9 +14,17 @@ class PositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($device_serial)
     {
-        //
+        $device = Device::where('device_serial_number', $device_serial)->first();
+
+        if(!$device)
+            return ['status' => 'ERROR', 'response' => 'Device with serial "' . $device_serial . '" does not exist.'];
+
+        return [
+            'position_x' => !is_null($device->lastPositions()->position_x) ? $device->lastPositions()->position_x : 'Non renseigné',
+            'position_y' => !is_null($device->lastPositions()->position_y) ? $device->lastPositions()->position_y : 'Non renseigné'
+        ];
     }
 
     /**

@@ -21,12 +21,7 @@
                 </div>
 
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    @if($vehicle->lastStatus->status_code == '4')
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <span data-feather="phone"></span>
-                            Contacter autorités
-                        </button>
-                    @elseif($vehicle->lastStatus->status_code == '3')
+                    @if($vehicle->lastStatus->status_code == '3')
                         <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#take-decision-{{ $vehicle->vehicle_id }}">
                             <span data-feather="shuffle"></span>
                             Aviser
@@ -71,9 +66,16 @@
                                 </button>
                             </div>
 
+                            <div class="modal-body">
+                                <div>
+                                    <span data-feather="alert-triangle"></span> Attention : En confirmant le vol, le système contactera automatiquemeent les autorités.<br>
+                                    Toute utilisation abusive de cette fonctionnalité peut vous suspendre de la plateforme et des poursuites judiciaires peuvent être entreprises à votre encontre.
+                                </div>
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                        onclick="event.preventDefault(); document.getElementById('confirm-theft-{{ $vehicle->vehicle_id }}').submit();">Confirmer</button>
+                                        onclick="event.preventDefault(); document.getElementById('confirm-theft-{{ $vehicle->vehicle_id }}').submit();"><span data-feather="alert-triangle"></span> Confirmer</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                         onclick="event.preventDefault(); document.getElementById('invalidate-theft-{{ $vehicle->vehicle_id }}').submit();">Infirmer</button>
                             </div>
