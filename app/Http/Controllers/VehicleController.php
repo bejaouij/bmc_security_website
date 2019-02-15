@@ -134,4 +134,18 @@ class VehicleController extends Controller
 
         return redirect()->back();
     }
+
+    public function cancelTheft(int $id) {
+        $vehicle = Vehicle::findOrFail($id);
+
+        if($vehicle->user_id != Auth::user()->user_id)
+            abort('404');
+
+        VehicleStatus::create([
+            'vehicle_id' => $vehicle->vehicle_id,
+            'status_code' => '5'
+        ]);
+
+        return redirect()->back();
+    }
 }

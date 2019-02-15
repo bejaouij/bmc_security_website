@@ -35,6 +35,13 @@
                         </a>
                     @endif
 
+                    @if($vehicle->lastStatus->status_code == '4')
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#cancel-vehicle-theft-modal-{{ $vehicle->vehicle_id }}">
+                            <span data-feather="anchor"></span>
+                            Annuler le vol
+                        </button>
+                    @endif
+
                     @if($vehicle->lastPositions)
                         <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#vehicle-localization-{{ $vehicle->vehicle_id }}">
                             <span data-feather="map-pin"></span>
@@ -52,6 +59,50 @@
                     </button>
                 </div>
             </div>
+
+            {{-- Cancel theft modal --}}
+
+            @if($vehicle->lastStatus->status_code == '4')
+                <div class="modal fade" id="cancel-vehicle-theft-modal-{{ $vehicle->vehicle_id }}" tabindex="-1" role="dialog" aria-labelledby="cancel-vehicle-theft-modal-{{ $vehicle->vehicle_id }}-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cancel-vehicle-theft-modal-{{ $vehicle->vehicle_id }}-label">Annuler le vol du véhicule "{{ $vehicle->vehicle_name }}" ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Êtes-vous sûr de vouloir annuler le vol du véhicule ?<br>
+                                        Cliquez sur le bouton "Annuler" ci-dessous pour confirmer.
+                                    </p>
+
+                                    <form id="cancel-vehicle-theft-{{ $vehicle->vehicle_id }}" action="{{ route('cancel-vehicle-theft', $vehicle->vehicle_id) }}" method="POST">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        onclick="event.preventDefault(); document.getElementById('cancel-vehicle-theft-{{ $vehicle->vehicle_id }}').submit();">Annuler</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="confirm-theft-{{ $vehicle->vehicle_id }}" action="{{ route('vehicle-confirm-theft', ['id' => $vehicle->vehicle_id]) }}" method="POST">
+                    @csrf
+                </form>
+
+                <form id="invalidate-theft-{{ $vehicle->vehicle_id }}" action="{{ route('vehicle-invalidate-theft', ['id' => $vehicle->vehicle_id]) }}" method="POST">
+                    @csrf
+                </form>
+            @endif
 
             {{-- Take decision modal --}}
 
@@ -120,7 +171,7 @@
                 </div>
 
                 <script data-id="map-script-{{ $vehicle->vehicle_id }}" data-position-x="{{ $vehicle->lastPositions->position_x }}" data-position-y="{{ $vehicle->lastPositions->position_y }}" defer>
-                    {{ 'var scriptId = ' . $vehicle->vehicle_id }}
+                            {{ 'var scriptId = ' . $vehicle->vehicle_id }}
 
                     var currentScript = document.querySelector('script[data-id="map-script-' + scriptId + '"]');
                     var map;
